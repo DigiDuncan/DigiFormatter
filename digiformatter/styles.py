@@ -5,6 +5,13 @@ import colored
 __all__ = ["styles"]
 
 
+class Style:
+    __slots__ = ["name", "codes"]
+    def __init__(self, name, codes):
+        self.name = name
+        self.codes = codes
+
+
 class Styles:
     __slots__ = ["_styles", "default", "timestring", "timestampCodes"]
 
@@ -23,7 +30,7 @@ class Styles:
             codes += colored.bg(bg)
         if attr is not None:
             codes += colored.attr(attr)
-        self._styles[name] = codes
+        self._styles[name] = Style(name, codes)
 
     def format(self, message, *, style="default", showtime=False):
         """Format a message in the requested style"""
@@ -33,7 +40,7 @@ class Styles:
         formatted = ""
         if showtime:
             formatted += self._timestamp()
-        formatted += self._styles.get(style, "") + message + colored.attr("reset")
+        formatted += self._styles[style].codes + message + colored.attr("reset")
         return formatted
 
     def print(self, *args, **kwargs):
