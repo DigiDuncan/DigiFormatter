@@ -20,7 +20,7 @@ class Styles:
         self.timestring = "%d %b %H:%M:%S"
         self.timestampCodes = colored.fg("magenta")
 
-    def create(self, name, *, fg = None, bg = None, attr = None):
+    def create(self, name, *, fg = None, bg = None, attr = None, prefix = None):
         """Create a custom style"""
         name = name.lower()
         codes = ""
@@ -32,7 +32,7 @@ class Styles:
             codes += colored.attr(attr)
         self._styles[name] = Style(name, codes)
 
-    def format(self, message, *, style="default", showtime=False):
+    def format(self, message, *, style="default", showtime=False, showprefix=False):
         """Format a message in the requested style"""
         style = style.lower()
         if style not in self._styles:
@@ -40,6 +40,8 @@ class Styles:
         formatted = ""
         if showtime:
             formatted += self._timestamp()
+        if showprefix and self.prefix:
+            formatted += self._styles[style].codes + colored.attr("reverse") + prefix + colored.attr("reset")
         formatted += self._styles[style].codes + message + colored.attr("reset")
         return formatted
 
