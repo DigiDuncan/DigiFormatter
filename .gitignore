@@ -6,3 +6,5 @@ build
 dist
 *.code-workspace
 _build
+
+.eggs/
