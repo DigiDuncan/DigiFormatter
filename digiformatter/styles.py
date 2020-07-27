@@ -33,7 +33,7 @@ class Styles:
         formatted = ""
         if showtime:
             formatted += self._timestamp()
-        formatted = self._styles.get(style, "") + message + colored.attr("reset")
+        formatted += self._styles.get(style, "") + message + colored.attr("reset")
         return formatted
 
     def print(self, *args, **kwargs):
