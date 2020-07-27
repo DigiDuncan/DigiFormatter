@@ -6,10 +6,12 @@ __all__ = ["styles"]
 
 
 class Style:
-    __slots__ = ["name", "codes"]
-    def __init__(self, name, codes):
+    __slots__ = ["name", "codes", "prefix"]
+
+    def __init__(self, name, codes, prefix = None):
         self.name = name
         self.codes = codes
+        self.prefix = prefix
 
 
 class Styles:
@@ -30,19 +32,20 @@ class Styles:
             codes += colored.bg(bg)
         if attr is not None:
             codes += colored.attr(attr)
-        self._styles[name] = Style(name, codes)
+        self._styles[name] = Style(name, codes, prefix)
 
     def format(self, message, *, style="default", showtime=False, showprefix=False):
         """Format a message in the requested style"""
         style = style.lower()
         if style not in self._styles:
             raise ValueError(f"Unknown style: {style}")
+        styledata = self._styles[style]
         formatted = ""
         if showtime:
             formatted += self._timestamp()
-        if showprefix and self.prefix:
-            formatted += self._styles[style].codes + colored.attr("reverse") + prefix + colored.attr("reset")
-        formatted += self._styles[style].codes + message + colored.attr("reset")
+        if showprefix and styledata.prefix:
+            formatted += styledata.codes + colored.attr("reverse") + styledata.prefix + colored.attr("reset") + " "
+        formatted += styledata.codes + message + colored.attr("reset")
         return formatted
 
     def print(self, *args, **kwargs):

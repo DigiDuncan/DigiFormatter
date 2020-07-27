@@ -4,13 +4,13 @@ from digiformatter import styles
 
 __all__ = ["debug", "info", "warn", "error", "critical", "log"]
 
-styles.create("debug", fg="blue")                               # DEBUG
-styles.create("info")                                           # INFO
-styles.create("warning", fg="yellow")                           # WARNING
-styles.create("warn", fg="yellow")                              # WARN
-styles.create("error", fg="red", attr="bold")                   # ERROR
-styles.create("critical", fg="yellow", bg="red", attr="bold")   # CRITICAL
-styles.create("fatal", fg="yellow", bg="red", attr="bold")      # FATAL
+styles.create("debug", fg="blue", prefix="DBG")                               # DEBUG
+styles.create("info", prefix="INF")                                           # INFO
+styles.create("warning", fg="yellow", prefix="WRN")                           # WARNING
+styles.create("warn", fg="yellow", prefix="WRN")                              # WARN
+styles.create("error", fg="red", attr="bold", prefix="ERR")                   # ERROR
+styles.create("critical", fg="yellow", bg="red", attr="bold", prefix="CRT")   # CRITICAL
+styles.create("fatal", fg="yellow", bg="red", attr="bold", prefix="CRT")      # FATAL
 
 
 def debug(message, **kwargs):
@@ -33,8 +33,8 @@ def critical(message, **kwargs):
     log(message, level="critical", **kwargs)
 
 
-def log(message, level="info", showtime=True):
-    styles.print(message, style=level, showtime=showtime)
+def log(message, level="info", showtime=True, showprefix=True):
+    styles.print(message, style=level, showtime=showtime, showprefix=showprefix)
 
 
 class DigiFormatterHandler(logging.Handler):
