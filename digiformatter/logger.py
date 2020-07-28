@@ -45,7 +45,7 @@ class DigiFormatterHandler(logging.Handler):
     def emit(self, record):
         message = record.getMessage()
         if self.showsource:
-            message = record.name + message
+            message = f"{record.name}: {message}"
         log(message, level=record.levelname.lower())
 
 
