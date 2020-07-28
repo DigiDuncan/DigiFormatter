@@ -38,8 +38,14 @@ def log(message, level="info", showtime=True, showprefix=True):
 
 
 class DigiFormatterHandler(logging.Handler):
+    def init(self, *args, showsource=False, **kwargs):
+        self.showsource = showsource
+        super().__init__(*args, **kwargs)
+
     def emit(self, record):
         message = record.getMessage()
+        if self.showsource:
+            message = record.name + message
         log(message, level=record.levelname.lower())
 
 
