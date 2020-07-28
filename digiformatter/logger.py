@@ -4,13 +4,13 @@ from digiformatter import styles
 
 __all__ = ["debug", "info", "warn", "error", "critical", "log"]
 
-styles.create("debug", fg="blue", prefix="DBG")                               # DEBUG
-styles.create("info", prefix="INF")                                           # INFO
-styles.create("warning", fg="yellow", prefix="WRN")                           # WARNING
-styles.create("warn", fg="yellow", prefix="WRN")                              # WARN
-styles.create("error", fg="red", attr="bold", prefix="ERR")                   # ERROR
-styles.create("critical", fg="yellow", bg="red", attr="bold", prefix="CRT")   # CRITICAL
-styles.create("fatal", fg="yellow", bg="red", attr="bold", prefix="CRT")      # FATAL
+styles.create("debug", fg="blue", prefix="DBG", showprefix=True, showtime=True)                               # DEBUG
+styles.create("info", prefix="INF", showprefix=True, showtime=True)                                           # INFO
+styles.create("warning", fg="yellow", prefix="WRN", showprefix=True, showtime=True)                           # WARNING
+styles.create("warn", fg="yellow", prefix="WRN", showprefix=True, showtime=True)                              # WARN
+styles.create("error", fg="red", attr="bold", prefix="ERR", showprefix=True, showtime=True)                   # ERROR
+styles.create("critical", fg="yellow", bg="red", attr="bold", prefix="CRT", showprefix=True, showtime=True)   # CRITICAL
+styles.create("fatal", fg="yellow", bg="red", attr="bold", prefix="CRT", showprefix=True, showtime=True)      # FATAL
 
 
 def debug(message, **kwargs):
@@ -33,7 +33,7 @@ def critical(message, **kwargs):
     log(message, level="critical", **kwargs)
 
 
-def log(message, level="info", showtime=True, showprefix=True):
+def log(message, level="info", showtime=None, showprefix=None):
     styles.print(message, style=level, showtime=showtime, showprefix=showprefix)
 
 
