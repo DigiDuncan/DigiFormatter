@@ -38,7 +38,7 @@ def log(message, level="info", showtime=None, showprefix=None):
 
 
 class DigiFormatterHandler(logging.Handler):
-    def init(self, *args, showsource=False, **kwargs):
+    def __init__(self, *args, showsource=False, **kwargs):
         self.showsource = showsource
         super().__init__(*args, **kwargs)
 

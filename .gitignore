@@ -8,3 +8,4 @@ dist
 _build
 
 .eggs/
+/.pytest_cache
