@@ -1,4 +1,4 @@
-__version__ = "0.5.4"
+__version__ = "0.5.5"
 
 __all__ = ["cursorUp", "cursorDown", "cursorRight", "cursorLeft", "scrollUp", "scrollDown", "setWindowTitle", "overwriteLines", "createLoadBar", "truncate", "styles"]
 

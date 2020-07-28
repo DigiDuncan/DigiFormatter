@@ -6,12 +6,14 @@ __all__ = ["styles"]
 
 
 class Style:
-    __slots__ = ["name", "codes", "prefix"]
+    __slots__ = ["name", "codes", "prefix", "showtime", "showprefix"]
 
-    def __init__(self, name, codes, prefix = None):
+    def __init__(self, name, codes, prefix = None, showtime = None, showprefix = None):
         self.name = name
         self.codes = codes
         self.prefix = prefix
+        self.showtime = showtime
+        self.showprefix = showprefix
 
 
 class Styles:
@@ -22,7 +24,7 @@ class Styles:
         self.timestring = "%d %b %H:%M:%S"
         self.timestampCodes = colored.fg("magenta")
 
-    def create(self, name, *, fg = None, bg = None, attr = None, prefix = None):
+    def create(self, name, *, fg = None, bg = None, attr = None, prefix = None, showtime = None, showprefix = None):
         """Create a custom style"""
         name = name.lower()
         codes = ""
@@ -32,14 +34,16 @@ class Styles:
             codes += colored.bg(bg)
         if attr is not None:
             codes += colored.attr(attr)
-        self._styles[name] = Style(name, codes, prefix)
+        self._styles[name] = Style(name, codes, prefix, showtime, showprefix)
 
-    def format(self, message, *, style="default", showtime=False, showprefix=False):
+    def format(self, message, *, style="default", showtime=None, showprefix=None):
         """Format a message in the requested style"""
         style = style.lower()
         if style not in self._styles:
             raise ValueError(f"Unknown style: {style}")
         styledata = self._styles[style]
+        showtime = getFirstNotNone([showtime, styledata.showtime, False])
+        showprefix = getFirstNotNone([showprefix, styledata.showprefix, False])
         formatted = ""
         if showtime:
             formatted += self._timestamp()
@@ -66,5 +70,12 @@ class Styles:
     def __str__(self):
         return "styles: " + (" ".join(self.format(level, style=level) for level in self._styles.keys()))
 
+
+# Returns the first not None value in a list
+def getFirstNotNone(items):
+    for i in items:
+        if i is not None:
+            return i
+    return None
 
 styles = Styles()
