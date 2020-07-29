@@ -68,7 +68,7 @@ class Styles:
         return lambda message: self.print(message, style=name)
 
     def __str__(self):
-        return "styles: " + (" ".join(self.format(level, style=level) for level in self._styles.keys()))
+        return "styles: " + (" ".join(self.format(level, style=level, showtime = False, showprefix = False) for level in self._styles.keys()))
 
 
 # Returns the first not None value in a list
@@ -77,5 +77,6 @@ def getFirstNotNone(items):
         if i is not None:
             return i
     return None
+
 
 styles = Styles()
