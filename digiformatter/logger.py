@@ -61,5 +61,5 @@ def getFreeLevel(base=None):
 def addLogLevel(name, *args, base=None, showprefix=True, showtime=True, **kwargs):
     styles.create(name, *args, **kwargs)
     freelevel = getFreeLevel(base)
-    logging.addLevelName(name, freelevel)
+    logging.addLevelName(freelevel, name)
     return freelevel
