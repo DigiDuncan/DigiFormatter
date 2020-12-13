@@ -42,8 +42,8 @@ class Styles:
         if style not in self._styles:
             raise ValueError(f"Unknown style: {style}")
         styledata = self._styles[style]
-        showtime = getFirstNotNone([showtime, styledata.showtime, False])
-        showprefix = getFirstNotNone([showprefix, styledata.showprefix, False])
+        showtime = getFirstNotNone([showtime, styledata.showtime, True])
+        showprefix = getFirstNotNone([showprefix, styledata.showprefix, True])
         formatted = ""
         if showtime:
             formatted += self._timestamp()
