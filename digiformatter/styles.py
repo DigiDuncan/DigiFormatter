@@ -49,8 +49,7 @@ class Styles:
             formatted += self._timestamp()
         if showprefix and styledata.prefix:
             formatted += styledata.codes + colored.attr("reverse") + styledata.prefix + colored.attr("reset") + " "
-        for line in message.splitlines():
-            formatted += styledata.codes + line + colored.attr("reset")
+        formatted += "\n".join(styledata.codes + line + colored.attr("reset") for line in message.splitlines())
         return formatted
 
     def print(self, *args, **kwargs):
